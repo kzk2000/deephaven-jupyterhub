@@ -1,0 +1,5 @@
+FROM jupyterhub/jupyterhub:3.0.0
+RUN pip3 install dockerspawner jupyter_server notebook
+RUN useradd -rm -d /home/admin -s /bin/bash -g root -G sudo -u 1001 -p admin admin
+
+COPY ./jupyterhub_config.py .

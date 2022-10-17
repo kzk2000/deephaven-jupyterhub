@@ -1,0 +1,1 @@
+sh ./opt/deephaven/server-jetty/bin/start /opt/deephaven/config/image-bootstrap.properties

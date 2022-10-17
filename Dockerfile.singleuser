@@ -1,0 +1,24 @@
+FROM jupyter/minimal-notebook:hub-3.0.0
+USER root
+RUN apt-get update -u
+RUN apt-get install openjdk-11-jdk curl -y
+
+# install code-server extensions
+RUN curl -fsSL https://code-server.dev/install.sh | sh
+RUN pip3 install jupyter-server-proxy jupyter-vscode-proxy
+
+# install deephaven server
+ARG DEEPHAVEN_VERSION=0.17.0
+ARG DEEPHAVEN_HOME=/opt
+RUN set -eux; \
+    mkdir -p ${DEEPHAVEN_HOME}; \
+    curl -L -o ${DEEPHAVEN_HOME}/installer.tar https://github.com/deephaven/deephaven-core/releases/download/v${DEEPHAVEN_VERSION}/server-jetty-${DEEPHAVEN_VERSION}.tar; \
+    tar -xf ${DEEPHAVEN_HOME}/installer.tar -C ${DEEPHAVEN_HOME}; \
+    rm ${DEEPHAVEN_HOME}/installer.tar;
+
+RUN pip3 install deephaven-core
+
+COPY ./deephaven/image-bootstrap.properties ${DEEPHAVEN_HOME}/image-bootstrap.properties
+COPY ./start.sh /usr/local/bin/start.sh
+
+
