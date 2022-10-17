@@ -21,4 +21,6 @@ RUN pip3 install deephaven-core
 COPY ./deephaven/image-bootstrap.properties ${DEEPHAVEN_HOME}/image-bootstrap.properties
 COPY ./start.sh /usr/local/bin/start.sh
 
+RUN echo $'#!/bin/bash\nexport test123=fff' > /home/post_start.sh
+RUN chmod 777 /home/post_start.sh
 

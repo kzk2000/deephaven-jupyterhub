@@ -49,16 +49,17 @@ c.DockerSpawner.remove = True
 # c.DockerSpawner.image = 'jupyter/minimal-notebook:hub-3.0.0'
 c.DockerSpawner.image = 'dh_test:latest'
 #c.DockerSpawner.extra_create_kwargs.update({'command': "start-singleuser.sh"})
-c.DockerSpawner.Spawner.cmd = ['start.sh', 'jupyterhub-singleuser', '--allow-root']
+c.DockerSpawner.cmd = ['start.sh', 'jupyterhub-singleuser', '--allow-root']
+c.DockerSpawner.post_start_cmd = "bash /home/post_start.sh"
 
-
-
-c.DockerSpawner.environment = {
-    'NB_USER': 'tete',
-    #'NB_USER': '{USER}',  # close. puts '{USER}' in all the right placces
-#     'NB_USER': '${JUPYTERHUB_USER}',  # whoami is correct, but still /home/{JUPYTERHUB_USER}
-#     #'NB_USER': '$JUPYTERHUB_USER', # whoami is correct, but still /home/$JUPYTERHUB_USER
-}
+#
+#
+# c.DockerSpawner.environment = {
+#     #'NB_USER': 'tete',
+#     #'NB_USER': '{USER}',  # close. puts '{USER}' in all the right places
+# #     'NB_USER': '${JUPYTERHUB_USER}',  # whoami is correct, but still /home/{JUPYTERHUB_USER}
+# #     #'NB_USER': '$JUPYTERHUB_USER', # whoami is correct, but still /home/$JUPYTERHUB_USER
+# }
 # #c.DockerSpawner.args =["NB_USER={username}"]
 c.DockerSpawner.Spawner.post_start_cmd = 'bash -c export test123=fff'
 
